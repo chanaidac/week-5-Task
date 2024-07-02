@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Activity</title>
+</head>
+
+<body>
+
+    <!-- https://bored-api.appbrewery.com/random -->
+
+    <button onclick="getData()"
+        style="background-color: #4caf50; cursor: pointer; color: white; border: 0; outline: 0; padding: 10px; border-radius: 10px;">Generate
+        Random Activity</button>
+
+    <ul id="result">
+    </ul>
+
+    <script>
+        let result = document.getElementById('result');
+
+        let getData = () => {
+            fetch('https://bored-api.appbrewery.com/random')
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    let mov = `
+                        <h1>${data.activity}</h1>
+                        <p>Type: ${data.type}</p>
+                        <p>Participants: ${data.participants}</p>
+                        <p>Price: ${data.price}</p>
+                        <p>Accessibility: ${data.accessibility}</p>
+                        <p>Link: ${data.link}</p>
+                    `
+                    result.innerHTML = mov;
+                })
+                .catch((error) => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>
